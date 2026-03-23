@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>给水晶的表白</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    height:100%;
+    background:linear-gradient(135deg,#ffe6f0,#fff);
+    font-family:"Microsoft YaHei",sans-serif;
+    overflow:hidden;
+}
+
+.container{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.card-wrapper{
+    position:relative;
+    width:320px;
+    max-width:85vw;
+}
+
+.card{
+    width:100%;
+    border-radius:24px;
+    box-shadow:0 20px 50px rgba(255,105,180,.35);
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-10px);}
+    100%{transform:translateY(0);}
+}
+
+/* 图片按钮热区 */
+.img-btn{
+    position:absolute;
+    width:42%;
+    height:12%;
+    bottom:10%;
+    border:none;
+    border-radius:999px;
+    background:rgba(255,255,255,0);
+    cursor:pointer;
+    transition:.4s ease;
+}
+
+.accept{ left:4%; }
+.reject{ right:4%; }
+
+/* 接受成功页 */
+.success{
+    position:fixed;
+    inset:0;
+    background:rgba(255,182,193,.96);
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    z-index:99;
+}
+
+.success h1{
+    font-size:34px;
+    color:#ff4d88;
+}
+.success p{
+    font-size:18px;
+    color:#ff6699;
+    margin-top:14px;
+    line-height:1.6;
+}
+
+/* 爱心 */
+.heart{
+    position:fixed;
+    color:#ff4d88;
+    animation: fall 4s linear infinite;
+}
+
+@keyframes fall{
+    0%{transform:translateY(-10vh);opacity:1}
+    100%{transform:translateY(110vh);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <div class="card-wrapper">
+        <img src="./love.jpg" class="card">
+
+        <!-- 接受 -->
+        <button class="img-btn accept" onclick="acceptLove()"></button>
+
+        <!-- 拒绝（命运反转） -->
+        <button class="img-btn reject" id="rejectBtn"></button>
+    </div>
+</div>
+
+<div class="success" id="success">
+    <h1>水晶，我喜欢你 💎</h1>
+    <p>
+        你点下的那一刻<br>
+        世界没有给你后退的选项<br><br>
+        因为我是真的想<br>
+        把未来认真地给你
+    </p>
+</div>
+
+<script>
+const rejectBtn = document.getElementById("rejectBtn");
+let used = false;
+
+// 点拒绝 → 直接转接受
+rejectBtn.addEventListener("click",()=>{
+    if(used) return;
+    used = true;
+
+    // 轻柔反馈
+    rejectBtn.style.transform = "scale(0.9)";
+    rejectBtn.style.opacity = "0.6";
+
+    // 延迟一下更有“命运感”
+    setTimeout(()=>{
+        acceptLove();
+    },300);
+});
+
+function acceptLove(){
+    document.getElementById("success").style.display="flex";
+    createHearts();
+}
+
+function createHearts(){
+    setInterval(()=>{
+        const h = document.createElement("div");
+        h.className="heart";
+        h.innerHTML="❤";
+        h.style.left = Math.random()*100+"vw";
+        h.style.fontSize = Math.random()*20+12+"px";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),4000);
+    },150);
+}
+</script>
+
+</body>
+</html>
